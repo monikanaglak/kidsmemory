@@ -1,0 +1,18 @@
+doctype html
+head
+  title Authenticated
+  script(src='/socket.io/socket.io.js')
+  script. 
+   window.addEventListener('DOMContentLoaded', function(){
+    var scoket = io('http://localhost:3000');
+
+    socket.on('connect', function(){
+        var idUtilisateur = '#{_id}';
+        scoket.emit('quiSuisJe', idUtilisateur);
+
+        socket.on('reponseALaQuestion', function(reponse){
+            console.log("Vous êtes :", reponse);
+        });
+    });
+   });
+   h1 Bienvenue #{login}
