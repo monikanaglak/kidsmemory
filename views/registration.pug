@@ -1,0 +1,15 @@
+html
+include includes/head.pug
+body
+ h1 Vous pouvez crée un compte 
+ form(action='/processing' method='POST')
+   p
+      | Choisissew un identifiant :
+      br
+      input(type='text' name='login' required)
+   p
+      | Choisissez un mot de Pasee:
+      br
+      input(type='password' name='password' required)
+   p
+      input(type='submit' value='Créer un compte')

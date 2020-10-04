@@ -1,0 +1,91 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+    background-color: silver;
+}
+main{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    border:5px black solid;
+    perspective: 1000px;
+}
+main div{
+    flex-basis:15%;
+    height: 20vh;
+    background-color:black;
+    border:3px solid white;
+    transform-style: 3d;
+    transition:transform 0.5s
+
+}
+
+@media(orientation:portrait){
+ main   div{
+        flex-basis:30%;
+        height: 16.66vh;
+    }
+}
+.cadetblue{
+    background-color: cadetblue;
+}
+.blue{
+    background-color: blue;
+}
+    
+
+.green{
+    background-color:green
+}
+  
+
+.yellow{
+    background-color:yellow;
+}
+    
+
+.pink{
+    background-color:pink;
+}
+
+.red{
+    background-color: red;
+
+}
+.gold{
+    background-color:gold;
+
+}
+.brown{
+    background-color:brown;
+
+}
+.coral{
+    background-color:coral;
+
+}
+.off{
+    background-color:#eee;
+
+}
+.hidden{
+    background-color: black;
+
+}
+ p.connected {
+    font-weight: normal;
+}
+
+ .connected span
+  {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: red;
+}
+span.violet {
+background:green;
+}

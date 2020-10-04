@@ -1,0 +1,56 @@
+
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="/css/style.css")
+    script(src="/js/index.js" defer)
+    script(src="/socket.io/socket.io.js")
+    title Memories Game
+    
+  body
+    - const pStyles = { "text-align":"center", "font-size": "22px", "color": "blue"}
+    - const uStyles = { "margin-left" : "400px", "margin-top":"-55px", "background-color": "cadetblue", "width":"250px", "height":"100px"}
+    p(style=pStyles) Welcome to my memory Game  #{login.charAt(0).toUpperCase() + login.slice(1)}
+    main
+      .blue
+      .green
+      .pink
+      .brown
+      .cadetblue
+      .coral
+      .red
+      .coral
+      .green
+      .brown
+      .red
+      .gold
+      .gold
+      .pink
+      .yellow
+      .blue
+      .yellow
+      .cadetblue
+    button
+      | Ready to Play  
+    article.player.z1
+      | Player 1
+      p.connected
+        | Connected 
+        span
+      p.ready
+        | points 0
+        span
+    article.player.z2(style=uStyles)
+      | Player 2
+      p.connected
+        | Connected
+        span
+      p.ready
+        | points 0
+        span  
+    h3#whos-go Your Move
+script. 
+
+  
