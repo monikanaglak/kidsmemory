@@ -14,24 +14,24 @@ html(lang="en")
     - const uStyles = { "margin-left" : "400px", "margin-top":"-55px", "background-color": "cadetblue", "width":"250px", "height":"100px"}
     p(style=pStyles) Welcome to my memory Game  #{login.charAt(0).toUpperCase() + login.slice(1)}
     main
-      .blue
-      .green
-      .pink
-      .brown
-      .cadetblue
-      .coral
-      .red
-      .coral
-      .green
-      .brown
-      .red
-      .gold
-      .gold
-      .pink
-      .yellow
-      .blue
-      .yellow
-      .cadetblue
+      .blue#one
+      .green#two
+      .pink#three
+      .brown#four
+      .cadetblue#five
+      .coral#six
+      .red#seven
+      .coral#eight
+      .green#nine
+      .brown#ten
+      .red#eleven
+      .gold#twelve
+      .gold#thirteen
+      .pink#fourtine
+      .yellow#fifteen
+      .blue#sixteen
+      .yellow#seventeen
+      .cadetblue#eighteen
     button
       | Ready to Play  
     article.player.z1
@@ -39,7 +39,7 @@ html(lang="en")
       p.connected
         | Connected 
         span
-      p.ready
+      p.ready#scorePlayerOne
         | points 0
         span
     article.player.z2(style=uStyles)
@@ -47,7 +47,7 @@ html(lang="en")
       p.connected
         | Connected
         span
-      p.ready
+      p.ready#scorePlayerTwo
         | points 0
         span  
     h3#whos-go Your Move

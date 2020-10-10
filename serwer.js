@@ -46,6 +46,7 @@ app.get('/registration', (request,response, next)=>{
     console.log(request.session)
     response.render('registration', { pageTitle: 'Create Your account if You want to Play' });
 });
+
 app.get('/game', (request,response, next)=>{
     if(request.session.login){
         response.render('game', {
@@ -130,42 +131,26 @@ const server = app.listen(PORT, ()=>{
 console.log('Server is running on the port 3000')
 })
 
-/**********PARTIE SOCKET IO */
-const socket = require("socket.io");
-const io = socket(server);
-//place to put player index connections
-const connection = [null,null];
-let activeCard="";
-let activeCards=[];
-let active;
-const enemySquare=[];
-io.sockets.on("connection", newConnection);
-function newConnection(socket) {
-  console.log("connected to WS server ID : " + socket.id);
-   //finding  player number
-  let playerIndex = -1;
-  for(const i in connection){
-      if(connection[i] === null){
-          playerIndex = i;
-          break
-      }
-  }
+/**********PARTIE SOCKET IO *****////////
 
-  
- //tell what player number they are
-  socket.emit('player-number', playerIndex)
-  console.log(`player ${playerIndex} has connected`)
-  if(playerIndex === -1)return;
-  connection[playerIndex] = false;
-  socket.broadcast.emit('player-connection', playerIndex);
-  socket.on('infos', function(data){
-    console.log(data)
-    
-}) 
-
-}
-
-
+var socketio = require('socket.io');
+const http = require('http');
+const io= socketio(server);
+/*
+app.use(express.static('public'));
+*/
+io.on('connection', socket =>{
+    console.log('You made socket connection');
+    socket.emit('message', 'Welcome to my game');
+    socket.broadcast.emit('message', 'A user has join the game');
+    socket.on('disconnect', ()=>{
+        io.emit('message', 'A user has left the game');
+    });
+    socket.on('infos', msg =>{ 
+        console.log(msg);
+        socket.broadcast.emit('reponse', msg);
+    });
+});
 
   
 

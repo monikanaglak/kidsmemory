@@ -1,86 +1,94 @@
 
-  var socket= io();
-  let cards = document.querySelectorAll('div');
-  let btn = document.querySelector('button');
-  let score= document.querySelector('.ready');
-  cards = Array.from(cards);
-  let activeCard = "";//carte that was clicked//
-  var activeCards = [];//pair of carte to be checked, if they have the same class name//
-  var active;
-  const gamePairs = cards.length/2;
-  let gameResult = 0;
-  const startTime = new Date().getTime();
-  let playerNumber = 0;
-  // once player has connected on click he gonne get connected to socket//
-  btn.addEventListener('click', start);
+var socket = io.connect('http://localhost:3000');
+let cards = document.querySelectorAll('div');
+let scorePlayerOne = 0;
+let scorePlayerTwo = 0;
 
-  function start(){
-    var socket = io();
-     socket.on('player-Number', num =>{
-       if(num === -1){
-         alert("No place for other player, you have to wait")
-         }else{
-               playerNumber=parseInt(num)
-              if(playerNumber === 1) currentPlayer = "otherPlayer"
-              }
-         })
+//carte that was clicked//
+let activeCard = "";
+//array of two cliked carte//
+var activeCards = [];
+var scoreOne = document.getElementById('scorePlayerOne');
+var scoreTwo = document.getElementById('scorePlayerTwo');
+cards = Array.from(cards);
+socket.on('message', message =>{
+  console.log(message); 
+});
+//listener for clik that takes id of element in varaible msg and send to the server//
+cards.forEach(card => {card.addEventListener('click', (e)=>{
+  e.preventDefault();
+  const msg = e.target.id;
+  socket.emit('infos', msg);
+})
 
-       socket.on('player-connection', num =>{
-       console.log(`Player numbero ${num} has connected`)
-      });
-      
-     } 
+ socket.on('reponse', function(msg) {
+        console.log("recived", msg);
+       var reponseId= document.getElementById(msg);
+       clickCard(msg , false);
+  })
   
-      
+})
 
-  //main function of the game//
-const clickCard = function(){
-      activeCard = this;
+const clickCard = function(id, isPlayerOne){
+  
+      activeCard = document.getElementById(id);
       if (activeCard == activeCards[0])
       return;
-      activeCard.classList.remove("hidden"); //when card id clicked remowe black and show color//
-              //active stock the number of id of card that was clicked//
-      active=activeCard.dataset.id;
+      activeCard.classList.remove("hidden");
       if (activeCards.length === 0){
           activeCards[0]=activeCard;
       return;
       }else{
-          cards.forEach(card=> card.removeEventListener("click", clickCard))
+        
           activeCards[1] = activeCard;
-
- setTimeout(function(){
+          console.log("befor", activeCards);
+setTimeout(function(){
+  console.log("after",activeCards)
        if (activeCards[0].className === activeCards[1].className){
-        console.log("Good job, you found the pair");
-          activeCards.forEach(card =>card.classList.add("off"))
-       if(gameResult == gamePairs){
-          const endTime = new Date().getTime();
-          const gameTime = (endTime - startTime)/1000;
-          alert("Game Over");
-  location.reload();
-  }
+           console.log("Good job, you found the pair");
+        if (isPlayerOne){
+           scorePlayerOne++;
+           scoreOne.innerHTML="Points " + scorePlayerOne;
+        }else{
+          scorePlayerTwo++;
+          scoreTwo.innerHTML = "Points " + scorePlayerTwo;
+        }
+           activeCards.forEach(card =>card.classList.add("off"))
+        if(scorePlayerOne + scorePlayerTwo == 9){
+           const endTime = new Date().getTime();
+           const gameTime = (endTime - startTime)/1000;
+           alert("Game Over");
+           location.reload();
+        }
        }else{
           console.log("sorry it's not a pair")
           activeCards.forEach(card => card.classList.add("hidden"))
-            }
+        }
 //resetting the table with card, making them ba able to be clickable again
           activeCard="";
-          activeCards.length = 0;
-          cards.forEach(card=> card.addEventListener("click",clickCard))
+          activeCards = [];
+          /*
+          cards.forEach(card=> card.addEventListener("click",()=>{clickCard(card.id)}));
+          */
   }, 1000)
-  }}
-
-  const init = function(){
-        setTimeout(function(){
+  }} 
+      
+const init = function(){
+           setTimeout(function(){
+             /*
            let i=0;
             cards.forEach(card=>{
             card.dataset.id=i
             i++;
           })
-          cards.forEach(card=>{ card.classList.add("hidden")
-          card.addEventListener("click",clickCard)
+          */
+          cards.forEach(card=>{ card.classList.add("hidden");
+          card.addEventListener("click", ()=>{clickCard(card.id, true)});
+
   })
   },2000)
   }
+
   init()
     
 
