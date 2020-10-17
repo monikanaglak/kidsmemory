@@ -137,21 +137,32 @@ console.log('Server is running on the port 3000')
 var socketio = require('socket.io');
 const http = require('http');
 const io= socketio(server);
-var avatars = ["avatar1.png","avatar2.jpg"];
+var avatars = [];
 /*
 app.use(express.static('public'));
 */
 //connections of sockets//
 
 io.on('connection', socket =>{
-    socket.emit('avatar', avatars[0]);
+    if (avatars.length>=2) return;
+    avatars.push({WS: socket, id: socket.id});
     console.log('You made socket connection');
     console.log(`Player ${socket.id} has connected`);
-    socket.emit('yournumber', socket.id);
+    for ( let player of avatars){
+        
+        player.WS.emit('yournumber', avatars.length)
+    }
     socket.emit('message', 'Welcome to my game');
     socket.broadcast.emit('message', 'A user has join the game');
     socket.on('disconnect', ()=>{
         io.emit('message', 'A user has left the game');
+        let idToDelete = socket.id;
+        avatars = avatars.filter((i)=>{return i.id !== idToDelete })
+        console.log(avatars.length);
+        for ( let player of avatars){
+        
+            player.WS.emit('yournumber', avatars.length)
+        }
     });
     
     socket.on('infos', msg =>{ 

@@ -31,11 +31,11 @@ socket.on('yournumber', function(data){
   console.log(data);
   //putting all socket id in array allPlayer//
   
-  allPlayer.push(data);
-  for (allPlayer[0] in allPlayer){
+  let numberOfPlayers = data;
+  if (numberOfPlayers >= 1 ){
     document.getElementById('jeden').style.display="block";
-  }
-  for (allPlayer[1] in allPlayer){
+    document.getElementById('dwa').style.display='none';
+  } if (numberOfPlayers >= 2){
     document.getElementById('dwa').style.display="block";
   }
 })
