@@ -1,24 +1,31 @@
+
 doctype html
 html
 include includes/head.pug 
 body
-  
-  -const wStyle = { "text-align":"center", "font-size": "22px", "color": "blue"}
-  h1(style=wStyle) Bienvenue
-    br
-  p Afin de pouvoir acceder
+    .memo To play the game, Please Sign in 
+    .container
+      .sideRigth
+        p#speach Iconic
+        p#text Memory Game
+        img(src="/img/allmix.png")
+      .sideLeft
+        form(action='/login' method='POST')
+          p
+            | Identifaint : 
+            input(type='text' name='login')
+          p
+            | Mot de Passe : 
+            input(type='password' name= 'password')
+          p
+            input(type='submit' value= 'Connexion')
 
-  p(style={color: 'blue', fontWeight:'bold'}) #{message}
-  form(action='/login' method='POST')
-   P
-     | Identifiant :
-     input(type='text' name='login')
-   p
-     | mot de passe :
-     input(type='password' name='password')
-   p
-     input(type='submit' value='Connexion')
+        p#compte Créer un compte
+            a(href='/registration')  ici
+      
+      
 
-  p Créer un compte
-    a(href='/registration') ici
+
+      
+    
     

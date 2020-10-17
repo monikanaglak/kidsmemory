@@ -17,6 +17,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: true  }));
 app.use('/js', express.static(__dirname + '/public/script'));
 app.use('/css', express.static(__dirname + '/public/style'));
+app.use('/img', express.static(__dirname + '/public/img'));
 
 app.use(session({
     resave:true,
@@ -136,16 +137,23 @@ console.log('Server is running on the port 3000')
 var socketio = require('socket.io');
 const http = require('http');
 const io= socketio(server);
+var avatars = ["avatar1.png","avatar2.jpg"];
 /*
 app.use(express.static('public'));
 */
+//connections of sockets//
+
 io.on('connection', socket =>{
+    socket.emit('avatar', avatars[0]);
     console.log('You made socket connection');
+    console.log(`Player ${socket.id} has connected`);
+    socket.emit('yournumber', socket.id);
     socket.emit('message', 'Welcome to my game');
     socket.broadcast.emit('message', 'A user has join the game');
     socket.on('disconnect', ()=>{
         io.emit('message', 'A user has left the game');
     });
+    
     socket.on('infos', msg =>{ 
         console.log(msg);
         socket.broadcast.emit('reponse', msg);

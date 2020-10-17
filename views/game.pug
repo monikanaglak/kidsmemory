@@ -10,10 +10,13 @@ html(lang="en")
     title Memories Game
     
   body
-    - const pStyles = { "text-align":"center", "font-size": "22px", "color": "blue"}
-    - const uStyles = { "margin-left" : "400px", "margin-top":"-55px", "background-color": "cadetblue", "width":"250px", "height":"100px"}
-    p(style=pStyles) Welcome to my memory Game  #{login.charAt(0).toUpperCase() + login.slice(1)}
-    main
+    - const pStyles = {"text-align":"center", "font-size": "22px", "color": "black", "margin-top" : "10px"}
+    - const playerOneStyle = {"font-size":"18px", "margin-left":"510px", "border-bottom":"2px solid black"}
+    - const playerTwoStyle = {"font-size": "18px", "margin-left":"400px", "border-bottom":"2px solid black"}
+    - const mStyle = {"margin-top":"40px"}
+    - const wStyle = {"margin-left":"-330px", "font-size":"18px","margin-top":"5px"}
+    p(style=pStyles) Click two different cards, find the pair and get a point  #{login.charAt(0).toUpperCase() + login.slice(1)}
+    main(style=mStyle)
       .blue#one
       .green#two
       .pink#three
@@ -31,26 +34,28 @@ html(lang="en")
       .yellow#fifteen
       .blue#sixteen
       .yellow#seventeen
-      .cadetblue#eighteen
-    button
-      | Ready to Play  
-    article.player.z1
+      .cadetblue#eighteen 
+  
+  section  
+    article.player.z1(style=playerOneStyle)
       | Player 1
-      p.connected
-        | Connected 
-        span
+      p#jeden
+        |  
+        
       p.ready#scorePlayerOne
-        | points 0
-        span
-    article.player.z2(style=uStyles)
-      | Player 2
-      p.connected
-        | Connected
-        span
+        | Points: 0
+        
+    article.player.z2(style=playerTwoStyle)
+      | Enemy
+      p#dwa 
+        |  
+        
       p.ready#scorePlayerTwo
-        | points 0
-        span  
-    h3#whos-go Your Move
+        | Points: 0
+    p#winner(style=wStyle)
+        | The winner is : 
+   
+         
 script. 
 
   
